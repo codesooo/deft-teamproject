@@ -110,3 +110,63 @@ export const logout = async (ctx) => {
   ctx.cookies.set('access_token');
   ctx.status = 204; // No Content
 };
+
+/*
+  POST /api/auth/updatePW
+  {
+    username: 'velopert',
+    password_old: 'mypass123',
+    password_new: 'mypass1234',
+    password_check: 'mypass1234'
+  }
+*/
+export const updatePW = async (ctx) => {
+  // password_old: 현재 비밀번호, password_new: 새 비밀번호, password_check: 비밀번호 확인
+  const { username, password_old, password_new, password_check } =
+    ctx.request.body;
+
+  // 입력값 중 하나라도 없으면 에러 처리
+  if (!username || !password_old || !password_new || !password_check) {
+    ctx.status = 401; // Unauthorized
+    return;
+  }
+
+  // 새 비밀번호와 비밀번호 확인이 다를 경우 에러 처리
+  if (password_new != password_check) {
+    ctx.status = 401;
+    return;
+  }
+
+  // 현재 비밀번호와 새 비밀번호가 동일할 경우 에러 처리
+  if (password_old == password_new) {
+    ctx.status = 401;
+    return;
+  }
+
+  try {
+    // username 이 존재하는지 확인
+    const exists = await User.findByUsername(username);
+    if (!exists) {
+      ctx.body = 401;
+      return;
+    }
+
+    // 현재 비밀번호 잘못 입력했을 때
+    const valid = await exists.checkPassword(password_old);
+    // 잘못된 비밀번호
+    if (!valid) {
+      ctx.status = 401;
+      return;
+    }
+
+    // 비밀번호 변경 정상적으로 처리될 때
+    await User.updateOne(
+      { username: username }, // 입력한 username의 비밀번호(hashedPassword)를 새로 입력한 비밀번호의 hash 값으로 변경함
+      { $set: { hashedPassword: await bcrypt.hash(password_new, 10) } },
+    );
+
+    ctx.body = ctx.request.body;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
