@@ -1,5 +1,6 @@
 import Joi from 'joi';
 import User from '../../models/user';
+import bcrypt from 'bcrypt';
 
 /*
   POST /api/auth/register
