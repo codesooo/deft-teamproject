@@ -2,7 +2,6 @@ import Joi from 'joi';
 import Info from '../../models/consumer.info';
 
 /*
-/*
     GET /api/consumer/info
 */
 export const list = async (ctx) => {
@@ -13,7 +12,6 @@ export const list = async (ctx) => {
     ctx.throw(500, e);
   }
 };
-*/
 
 /*
   POST /api/consumer/info/create
@@ -113,7 +111,6 @@ export const inforCreate = async (ctx) => {
 };
 
 /*
-/*
     GET /api/consumer/info/:id
 */
 export const read = async (ctx) => {
@@ -166,4 +163,3 @@ export const update = async (ctx) => {
     ctx.throw(500, e);
   }
 };
-*/
