@@ -76,6 +76,7 @@ export const inforCreate = async (ctx) => {
     payment,
     inflow,
     statement,
+    date_signup,
   } = ctx.request.body;
   try {
     // usernum 이 이미 존재하는지 확인
@@ -100,6 +101,7 @@ export const inforCreate = async (ctx) => {
       payment: payment,
       inflow: inflow,
       statement: statement,
+      date_signup: date_signup,
     });
 
     await post.save(); // 데이터베이스에 저장
