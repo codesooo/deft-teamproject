@@ -26,11 +26,11 @@ export const list = async (ctx) => {
     phone: "01012341234", 
     address: "서울특별시 노원구", 
     memo: "기타메모",
-    manager: "김코치", 
+    manager: 1001, 
     payment: "계좌이체", 
     inflow: "유입경로",
     statement: "상태", 
-    date_signup: "20010101", 
+    date_signup: "2001-01-01", 
   }
 */
 export const inforCreate = async (ctx) => {
@@ -47,7 +47,7 @@ export const inforCreate = async (ctx) => {
     phone: Joi.string().required(), // 전화번호(필수)
     address: Joi.string(), // 주소
     memo: Joi.string(), // 기타 메모
-    manager: Joi.string().required(), // 담당자(필수)
+    manager: Joi.number().required(), // 담당자(필수) -> 코치번호로 작성하기
     payment: Joi.string(), // 결제정보
     inflow: Joi.string(), // 유입경로
     statement: Joi.string(), // 상태
@@ -165,3 +165,25 @@ export const update = async (ctx) => {
     ctx.throw(500, e);
   }
 };
+
+/*
+    Post /api/consumer/info/search
+    {
+      name: "김회원"
+    }
+*/
+export const userSearch = async (ctx) => {
+  const { name } = ctx.request.body;
+
+  try {
+    const post = await Info.find({ name: { $regex: name } }).exec();
+    if (!post) {
+      ctx.status = 404;
+      return;
+    }
+    ctx.body = post;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
+
