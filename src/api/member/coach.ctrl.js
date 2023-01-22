@@ -1,6 +1,8 @@
 import Joi from 'joi';
 import User from '../../models/user';
 import Coach from '../../models/member.coach';
+import Info from '../../models/consumer.info';
+import Admin from '../../models/member.admin';
 
 /*
   POST /api/member/coach/create
