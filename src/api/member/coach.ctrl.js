@@ -11,7 +11,8 @@ import Coach from '../../models/member.coach';
     password: "kwangwoon",
     email: "kwdeft@kw.ac.kr",
     job: "직무",
-    record: "이력"
+    record: "이력",
+    coachnum: 123
   }
 */
 export const coachCreate = async (ctx) => {
@@ -25,6 +26,7 @@ export const coachCreate = async (ctx) => {
     password: Joi.string(), // 비밀번호
     job: Joi.string(), // 직무
     record: Joi.string(), // 이력
+    coachnum: Joi.number().required(), // 코치 번호(필수)
   });
 
   const result = schema.validate(ctx.request.body);
@@ -34,7 +36,7 @@ export const coachCreate = async (ctx) => {
     return;
   }
 
-  const { name, phone, email, username, password, job, record } =
+  const { name, phone, email, username, password, job, record, coachnum } =
     ctx.request.body;
   try {
     // username 이 이미 존재하는지 확인
@@ -52,6 +54,7 @@ export const coachCreate = async (ctx) => {
       password: password,
       job: job,
       record: record,
+      coachnum: coachnum,
     });
 
     await post.save(); // 데이터베이스에 저장
