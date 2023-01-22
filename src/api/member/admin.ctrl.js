@@ -128,3 +128,24 @@ export const update = async (ctx) => {
     ctx.throw(500, e);
   }
 };
+
+/*
+    Post /api/member/admin/search
+    {
+      name: "최관리"
+    }
+*/
+export const search = async (ctx) => {
+  const { name } = ctx.request.body;
+
+  try {
+    const post = await Admin.find({ name: { $regex: name } }).exec();
+    if (!post) {
+      ctx.status = 404;
+      return;
+    }
+    ctx.body = post;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
