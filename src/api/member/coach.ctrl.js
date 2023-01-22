@@ -128,13 +128,68 @@ export const update = async (ctx) => {
   }
 };
 
-export const searchUsers = async (ctx) => {
-  const { name } = ctx.request.body;
+/*
+    GET /api/member/coach/responsible/:manager(코치번호)
+    (예. /api/member/coach/responsible/1001)
+*/
+export const responsible = async (ctx) => {
+  const { manager } = ctx.params;
 
   try {
-    const posts = await User.find({ manager: name });
-    ctx.body = posts;
+    const post = await Info.find({ manager: manager }).exec();
+    if (!post) {
+      ctx.status = 404;
+      return;
+    }
+    ctx.body = post;
   } catch (e) {
     ctx.throw(500, e);
   }
 };
+
+/*
+    Post /api/member/coach/search
+    {
+      name: "이코치"
+    }
+*/
+export const search = async (ctx) => {
+  const { name } = ctx.request.body;
+
+  try {
+    const post = await Coach.find({ name: { $regex: name } }).exec();
+    if (!post) {
+      ctx.status = 404;
+      return;
+    }
+    ctx.body = post;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
+
+/*
+    Post /api/member/search
+    {
+      name: "이코치"
+    }
+*/
+export const searchMember = async (ctx) => {
+  const { name } = ctx.request.body;
+
+  try {
+    const post =
+      (await Coach.find({ name: { $regex: name } }).exec()) +
+      ',' +
+      (await Admin.find({ name: { $regex: name } }).exec());
+
+    if (post == ',') {
+      ctx.status = 404;
+      return;
+    }
+    ctx.body = post;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
+
