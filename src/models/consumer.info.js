@@ -16,6 +16,7 @@ const ConsumerSchema = new Schema({
   inflow: String, // 유입경로(소개정보)
   statement: String, // 상태
   date_signup: Date, // 가입일시
+  birthday: Date, // 생년월일
 });
 
 ConsumerSchema.statics.findByUsernum = function (usernum) {
