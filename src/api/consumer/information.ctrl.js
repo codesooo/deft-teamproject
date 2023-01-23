@@ -31,11 +31,12 @@ export const list = async (ctx) => {
     inflow: "유입경로",
     statement: "상태", 
     date_signup: "2001-01-01", 
+    birthday: "2001-01-01"
   }
 */
 export const inforCreate = async (ctx) => {
   // Request Body 검증하기
-  // 필수: 회원번호, 성별, 장애 유무, 이름, 전화번호, 담당자 / 선택: 키, 몸무게, 장애 유형, 주소, 기타메모, 결제정보, 유입경로, 상태, 가입일시
+  // 필수: 회원번호, 성별, 장애 유무, 이름, 전화번호, 담당자 / 선택: 키, 몸무게, 장애 유형, 주소, 기타메모, 결제정보, 유입경로, 상태, 가입일시, 생년월일
   const schema = Joi.object().keys({
     usernum: Joi.number().required(), // 회원 번호
     userheight: Joi.number(), // 키
@@ -51,7 +52,8 @@ export const inforCreate = async (ctx) => {
     payment: Joi.string(), // 결제정보
     inflow: Joi.string(), // 유입경로
     statement: Joi.string(), // 상태
-    date_signup: Joi.string(),
+    date_signup: Joi.string(), // 가입일시
+    birthday: Joi.string(), // 생년월일
   });
 
   const result = schema.validate(ctx.request.body);
@@ -77,6 +79,7 @@ export const inforCreate = async (ctx) => {
     inflow,
     statement,
     date_signup,
+    birthday,
   } = ctx.request.body;
   try {
     // usernum 이 이미 존재하는지 확인
@@ -102,6 +105,7 @@ export const inforCreate = async (ctx) => {
       inflow: inflow,
       statement: statement,
       date_signup: date_signup,
+      birthday: birthday,
     });
 
     await post.save(); // 데이터베이스에 저장
