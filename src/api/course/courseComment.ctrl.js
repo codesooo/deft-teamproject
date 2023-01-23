@@ -6,7 +6,9 @@ import Joi from 'joi';
     {
         content: '',
         userId: '',
+        username: '',
         courseId: '',
+        responseTo: '',
     }
 */
 export const comment = async (ctx) => {
@@ -14,7 +16,9 @@ export const comment = async (ctx) => {
     //객체가 다음 필드를 가지고 있음을 검증
     content: Joi.string().required(), // required()가 있으면 필수 항목
     userId: Joi.string().required(),
+    username: Joi.string().reqruied(),
     courseId: Joi.string().required(),
+    responseTo: Joi.string(),
   });
 
   //검증과 실패인 경우 에러 처리
@@ -25,11 +29,14 @@ export const comment = async (ctx) => {
     return;
   }
 
-  const {content, userId, courseId} = ctx.request.body;
+  const {content, userId, courseId, responseTo} = ctx.request.body;
   const courseComment = new CourseComment({
     content,
     userId,
+    username,
     courseId,
+    responseTo,
+    user: ctx.state.user,
   });
   try{
     await courseComment.save();

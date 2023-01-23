@@ -8,7 +8,7 @@ course.get('/list', courseCtrl.list);
 course.post('/write', courseCtrl.write);
 course.get('/:id', courseCtrl.read);
 course.delete('/:id', courseCtrl.remove);
-course.patch('/:id', courseCtrl.update);
+course.put('/:id', courseCtrl.update);
 course.post('/comment', courseCommentCtrl.comment);
 
 export default course;

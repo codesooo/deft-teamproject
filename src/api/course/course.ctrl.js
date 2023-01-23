@@ -46,7 +46,7 @@ export const write = async (ctx) => {
 };
 
 /*
-    GET /api/course/posts
+    GET /api/course/list
 */
 export const list = async (ctx) => {
   try {
@@ -57,6 +57,9 @@ export const list = async (ctx) => {
   }
 };
 
+/*
+    GET /api/course/:id
+*/
 export const read = async (ctx) => {
   const {id} = ctx.params;
   try {
@@ -71,6 +74,9 @@ export const read = async (ctx) => {
   }
 };
 
+/*
+    DELETE /api/course/:id
+*/
 export const remove = async (ctx) => {
   const {id} = ctx.params;
   try {
@@ -81,24 +87,11 @@ export const remove = async (ctx) => {
   }
 };
 
+/*
+    PUT /api/course/:id
+*/
 export const update = async (ctx) => {
-  const {id} = ctx.params;
-  // write 에서 사용한 schema와 비슷하나 required()가 없다.
-  const schema = Joi.object().keys({
-    title: Joi.string(),
-    detail: Joi.string(),
-    content: Joi.string(),
-    effect: Joi.String(),
-    attachment: Joi.array().items(Joi.string()),
-  });
-
-  // 검증하고 나서 실패인 경우 에러 처리
-  const result = schema.validate(ctx.request.body);
-  if (result.error) {
-    ctx.status = 400; // Bad Request
-    ctx.body = result.error;
-    return;
-  }
+  const { id } = ctx.params;
   try {
     const course = await Course.findByIdAndUpdate(id, ctx.request.body, {
       new: true, // 업데이트된 데이터 반환
