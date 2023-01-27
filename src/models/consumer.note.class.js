@@ -9,9 +9,9 @@ const ClassNoteSchema = new Schema({
   manager: String, // 담당자
   contents: String, // 수업 내용
   comments: String, // 코멘트
-  date_class: Date, // 날짜
+  date_class: String, // 날짜
   subject: String, // 수업 제목
-  ndate_class: Date, // 다음 수업 날짜
+  ndate_class: String, // 다음 수업 날짜
   attachment_class: {
     type: [String],
     default: [],

@@ -15,10 +15,13 @@ const ConsumerSchema = new Schema({
   payment: String, // 결제정보
   inflow: String, // 유입경로(소개정보)
   statement: String, // 상태
-  date_signup: Date, // 가입일시
-  birthday: Date, // 생년월일
+  date_signup: String, // 가입일시
+  birthday: String, // 생년월일
   membership: String, // 회원권
   user_purpose: String, // 운동목적
+vaccinate: String, //백신유무
+category: String, //유형
+
 });
 
 ConsumerSchema.statics.findByUsernum = function (usernum) {

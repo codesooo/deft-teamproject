@@ -6,7 +6,6 @@ import Joi from 'joi';
     {
         content: '',
         userId: '',
-        username: '',
         courseId: '',
         responseTo: '',
     }
@@ -16,9 +15,8 @@ export const comment = async (ctx) => {
     //객체가 다음 필드를 가지고 있음을 검증
     content: Joi.string().required(), // required()가 있으면 필수 항목
     userId: Joi.string().required(),
-    username: Joi.string().reqruied(),
     courseId: Joi.string().required(),
-    responseTo: Joi.string(),
+    date: Joi.string().required(),
   });
 
   //검증과 실패인 경우 에러 처리
@@ -29,19 +27,49 @@ export const comment = async (ctx) => {
     return;
   }
 
-  const {content, userId, courseId, responseTo} = ctx.request.body;
+  const {content, userId, courseId, date} = ctx.request.body;
   const courseComment = new CourseComment({
     content,
     userId,
-    username,
     courseId,
-    responseTo,
+    date,
     user: ctx.state.user,
   });
   try{
     await courseComment.save();
     ctx.body = courseComment;
   } catch(e) {
+    ctx.throw(500, e);
+  }
+};
+
+/*
+    Get  /api/course/comment/:courseId
+*/
+export const getComments = async (ctx) => {
+  const { courseId } = ctx.params;
+
+  try {
+    const post = await CourseComment.find({ courseId : courseId }).exec();
+    if (!post) {
+      ctx.status = 404;
+      return;
+    }
+    ctx.body = post;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
+
+/*
+    DELETE /api/course/comment/:id
+*/
+export const remove = async (ctx) => {
+  const {id} = ctx.params;
+  try {
+    await CourseComment.findByIdAndRemove(id).exec();
+    ctx.status = 204; // No Content (성공했으나 응답할 데이터 없음)
+  } catch (e) {
     ctx.throw(500, e);
   }
 };

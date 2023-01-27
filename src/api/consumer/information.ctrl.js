@@ -33,7 +33,9 @@ export const list = async (ctx) => {
     date_signup: "2001-01-01", 
     birthday: "2001-01-01",
     membership: "회원권1",
-    user_purpose: "운동 목적"
+    user_purpose: "운동 목적",
+    vaccinate: "백신유무",
+    category: "오프라인"
   }
 */
 export const inforCreate = async (ctx) => {
@@ -59,6 +61,9 @@ export const inforCreate = async (ctx) => {
     birthday: Joi.string(), // 생년월일
     membership: Joi.string(), // 회원권
     user_purpose: Joi.string(), // 운동목적
+    vaccinate: Joi.string(), // 백신유무
+    category: Joi.string(), // 유형
+
   });
 
   const result = schema.validate(ctx.request.body);
@@ -87,6 +92,8 @@ export const inforCreate = async (ctx) => {
     birthday,
     membership,
     user_purpose,
+    vaccinate,
+    category,
   } = ctx.request.body;
   try {
     // usernum 이 이미 존재하는지 확인
@@ -115,6 +122,8 @@ export const inforCreate = async (ctx) => {
       birthday: birthday,
       membership: membership,
       user_purpose: user_purpose,
+      vaccinate: vaccinate,
+      category: category,
     });
 
     await post.save(); // 데이터베이스에 저장
@@ -199,4 +208,3 @@ export const userSearch = async (ctx) => {
     ctx.throw(500, e);
   }
 };
-

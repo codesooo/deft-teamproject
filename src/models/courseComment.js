@@ -4,11 +4,7 @@ const CourseCommentSchema = new Schema({
   content: String,
   userId: String,
   courseId: String,
-  responseTo: String,
-  // user: {
-  //   _id: mongoose.Types.ObjectId,
-  //   username: String,
-  // },
+  date: String,
 },
     {
         timestamps: true,

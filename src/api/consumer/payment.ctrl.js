@@ -16,11 +16,11 @@ export const list = async (ctx) => {
 /*
   POST /api/consumer/payment/create
   {
-    pay_amount: 135000,
-    usernum: 123,
-    product: "상품 이름",
-    pay_method: "계좌이체",
-    pay_date: "2023-01-01"
+    pay_amount: 135000, //결제 금액
+    usernum: 123, //회원번호
+    product: "상품 이름", //상품이름
+    pay_method: "계좌이체", //결제 정보
+    pay_date: "2023-01-01" //결제일시
   }
 */
 export const Create = async (ctx) => {

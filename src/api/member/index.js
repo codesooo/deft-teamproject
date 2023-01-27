@@ -19,8 +19,6 @@ member.post('/coach/create', coachCtrl.coachCreate);
 member.get('/coach/:id', coachCtrl.read);
 member.delete('/coach/:id', coachCtrl.remove);
 member.patch('/coach/:id', coachCtrl.update);
-member.post('coach/searchuser', coachCtrl.searchUsers);
-
 member.get('/coach/responsible/:manager', coachCtrl.responsible); // 담당회원 조회
 member.post('/coach/search', coachCtrl.search); // 코치 검색
 

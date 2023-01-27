@@ -5,7 +5,7 @@ const PaymentSchema = new Schema({
   usernum: Number, // 회원 번호
   product: String, // 상품 이름
   pay_method: String, // 결제 수단
-  pay_date: Date, // 결제일
+  pay_date: String, // 결제일
 });
 
 const PaymentInfo = mongoose.model('PaymentInfo', PaymentSchema);

@@ -7,8 +7,8 @@ const CounselNoteSchema = new Schema({
   method: String, // 상담 방법
   reception: String, // 접수 상태
   detail: String, // 상담 내용
-  date_counsel: Date, // 날짜
-  ndate_counsel: Date, // 다음 수업 날짜
+  date_counsel: String, // 날짜
+  ndate_counsel: String, // 다음 수업 날짜
   attachment_counsel: {
     type: [String],
     default: [],
