@@ -18,13 +18,13 @@ export const scheduleAdmin = async (ctx) => {
   const schema = Joi.object().keys({
     //객체가 다음 필드를 가지고 있음을 검증
     usernum: Joi.number().required(), // required()가 있으면 필수 항목
-    manager: Joi.string(),
+    manager: Joi.number(),
     date: Joi.string().required(),
     startHour: Joi.string().required(),
     startMinute: Joi.string().required(),
     endHour: Joi.string().required(),
     endMinute: Joi.string().required(),
-    memo: Joi.string().required(),
+    memo: Joi.string(),
   });
 
   //검증과 실패인 경우 에러 처리
