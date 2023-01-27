@@ -1,9 +1,10 @@
-import ScheduleAdmin from "../../models/schedule";
+import ScheduleCoach from "../../models/schedule";
 import Consumer from "../../models/consumer.info";
+
 import Joi from 'joi';
 
 /*
-    POST /api/schedule/admin
+    POST /api/schedule/coach
     {
         usernum: '회원번호',
         date: '수업 날짜',
@@ -14,7 +15,7 @@ import Joi from 'joi';
         memo: '메모',
     }
 */
-export const scheduleAdmin = async (ctx) => {
+export const scheduleCoach = async (ctx) => {
   const schema = Joi.object().keys({
     //객체가 다음 필드를 가지고 있음을 검증
     usernum: Joi.number().required(), // required()가 있으면 필수 항목
@@ -37,9 +38,7 @@ export const scheduleAdmin = async (ctx) => {
 
   const {usernum, date, startHour, startMinute, endHour, endMinute, memo} = ctx.request.body;
   const {manager} = await Consumer.findOne({usernum : usernum}).exec();
-  console.log("이건 :", manager);
-
-  const scheduleAdmin = new ScheduleAdmin({
+  const scheduleCoach = new ScheduleCoach({
     usernum, 
     manager,
     date, 
@@ -55,44 +54,49 @@ export const scheduleAdmin = async (ctx) => {
         이미 존재하는 일정인지 확인 
     */
 
-    const checkconsumer = await ScheduleAdmin.findOne({ usernum : usernum, date : date});
+    const checkconsumer = await ScheduleCoach.findOne({ usernum : usernum, date : date});
     if (checkconsumer != undefined){
       ctx.status = 400;
-      ctx.body = { message: "해당 날짜에 해당 회원의 일정이 이미 존재합니다." };
+      ctx.body = { message: "해당 날짜에 해당 회g원의 일정이 이미 존재합니다." };
       return;
     }
   
-    const checkmanager = await ScheduleAdmin.findOne({ manager : manager, startHour : startHour, date : date});
+    const checkmanager = await ScheduleCoach.findOne({ manager : manager, startHour : startHour, date : date});
     if (checkmanager != undefined){
       ctx.status = 400;
-      ctx.body = { message: "해당 시간에 해당 담당자(코치)의 일정이 이미 존재합니다." };
+      ctx.body = { message: "해당 시간에 일정이 이미 존재합니다." };
       return;
     }
 
-    await scheduleAdmin.save();
-    ctx.body = scheduleAdmin;
+    await scheduleCoach.save();
+    ctx.body = scheduleCoach;
   } catch(e) {
     ctx.throw(500, e);
   }
 };
 
 /*
-    GET api/schedule/admin/list
+    GET api/schedule/coach/list/:manager
 */
-
-// 모든 일정 불러오기
-
+// 해당 코치의 모든 일정 불러오기
 export const list = async (ctx) => {
+  const {manager} = ctx.params;
+
   try {
-    const schedules = await ScheduleAdmin.find().exec();
+
+    const schedules = await ScheduleCoach.find({manager : manager}).exec();
+    if(!schedules) {
+      ctx.status = 404; // Not Found
+      return;
+    }
     ctx.body = schedules;
   } catch (e) {
-    ctx.throw(500, e)
+    ctx.throw(500, e);
   }
 };
 
 /*
-    GET api/schedule/admin/usernum/:usernum
+    GET api/schedule/coach/usernum/:usernum
 */
 // 회원번호로 검색
 export const searchNum = async (ctx) => {
@@ -110,7 +114,7 @@ export const searchNum = async (ctx) => {
 };
 
 /*
-    GET api/schedule/admin/username/:name
+    GET api/schedule/coach/username/:name
 */
 // 이름으로 검색
 export const searchName = async (ctx) => {
@@ -127,30 +131,8 @@ export const searchName = async (ctx) => {
   }
 };
 
-
 /*
-    GET api/schedule/admin/manager/:manager
-*/
-// 담당자 이름으로 해당 담당자의 일정 불러오기
-export const managerschedule = async (ctx) => {
-  const {manager} = ctx.params;
-
-  try {
-
-    const schedules = await ScheduleAdmin.find({manager : manager}).exec();
-    if(!schedules) {
-      ctx.status = 404; // Not Found
-      return;
-    }
-    ctx.body = schedules;
-  } catch (e) {
-    ctx.throw(500, e);
-  }
-};
-
-
-/*
-    PATCH api/schedule/admin/:id
+    PATCH api/schedule/coach/:id
 */
 
 export const update = async (ctx) => {
@@ -177,7 +159,8 @@ export const update = async (ctx) => {
       return;
     }
     try {
-      const schedule = await ScheduleAdmin.findByIdAndUpdate(id, ctx.request.body, {
+      
+      const schedule = await ScheduleCoach.findByIdAndUpdate(id, ctx.request.body, {
         new: true, // 업데이트된 데이터 반환
       }).exec();
       if(!schedule) {
@@ -192,13 +175,13 @@ export const update = async (ctx) => {
 
 
 /*
-    DELETE api/schedule/admin/:id
+    DELETE api/schedule/coach/:id
 */
 
 export const remove = async (ctx) => {
   const {id} = ctx.params;
   try {
-    await ScheduleAdmin.findByIdAndRemove(id).exec();
+    await ScheduleCoach.findByIdAndRemove(id).exec();
     ctx.status = 204; // No Content (성공했으나 응답할 데이터 없음)
   } catch (e) {
     ctx.throw(500, e);
