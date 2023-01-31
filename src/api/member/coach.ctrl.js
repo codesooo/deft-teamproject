@@ -96,6 +96,25 @@ export const read = async (ctx) => {
   }
 };
 
+
+/*
+    GET /api/member/coach/coachnum/:coachnum
+*/
+export const searchcoachnum = async (ctx) => {
+  const { coachnum } = ctx.params;
+  try {
+    const post = await Coach.findOne({coachnum:coachnum}).exec();
+    if (!post) {
+      ctx.status = 404;
+      return;
+    }
+    ctx.body = post;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
+
+
 /*
     DELETE /api/member/coach/:id
 */

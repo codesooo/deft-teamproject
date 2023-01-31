@@ -1,5 +1,6 @@
 import ScheduleAdmin from "../../models/schedule";
 import Consumer from "../../models/consumer.info";
+
 import Joi from 'joi';
 
 /*
@@ -19,6 +20,7 @@ export const scheduleAdmin = async (ctx) => {
     //객체가 다음 필드를 가지고 있음을 검증
     usernum: Joi.number().required(), // required()가 있으면 필수 항목
     manager: Joi.number(),
+    name: Joi.string(),
     date: Joi.string().required(),
     startHour: Joi.string().required(),
     startMinute: Joi.string().required(),
@@ -36,12 +38,13 @@ export const scheduleAdmin = async (ctx) => {
   }
 
   const {usernum, date, startHour, startMinute, endHour, endMinute, memo} = ctx.request.body;
+  const {name} = await Consumer.findOne({usernum : usernum}).exec();
   const {manager} = await Consumer.findOne({usernum : usernum}).exec();
-  console.log("이건 :", manager);
-
+  console.log("name : ", name);
   const scheduleAdmin = new ScheduleAdmin({
-    usernum, 
+    usernum,
     manager,
+    name, 
     date, 
     startHour, 
     startMinute, 
@@ -86,6 +89,20 @@ export const list = async (ctx) => {
   try {
     const schedules = await ScheduleAdmin.find().exec();
     ctx.body = schedules;
+  } catch (e) {
+    ctx.throw(500, e)
+  }
+};
+export const read = async (ctx) => {
+  const {id} = ctx.params;
+
+  try {
+    const schedule = await ScheduleAdmin.findById(id).exec();
+    if(!schedule) {
+      ctx.status = 404; // Not Found
+      return;
+    }
+    ctx.body = schedule;
   } catch (e) {
     ctx.throw(500, e)
   }
@@ -160,6 +177,7 @@ export const update = async (ctx) => {
     //객체가 다음 필드를 가지고 있음을 검증
     usernum: Joi.number(),
     manager: Joi.string(),
+    name: Joi.string(),
     date: Joi.string(),
     startHour: Joi.string(),
     startMinute: Joi.string(),

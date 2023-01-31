@@ -35,6 +35,7 @@ export const register = async (ctx) => {
 
     const user = new User({
       username,
+      
     });
     await user.setPassword(password); // 비밀번호 설정
     await user.save(); // 데이터베이스에 저장

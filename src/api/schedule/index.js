@@ -13,6 +13,7 @@ schedule.get('/admin/username/:name', scheduleAdminCtrl.searchName);
 schedule.get('/admin/manager/:manager', scheduleAdminCtrl.managerschedule);
 schedule.patch('/admin/:id', scheduleAdminCtrl.update);
 schedule.delete('/admin/:id', scheduleAdminCtrl.remove);
+schedule.get('/admin/id/:id', scheduleAdminCtrl.read);
 
 
 schedule.post('/coach', scheduleCoachCtrl.scheduleCoach);

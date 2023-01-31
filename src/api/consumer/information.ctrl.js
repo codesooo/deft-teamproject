@@ -150,7 +150,22 @@ export const read = async (ctx) => {
     ctx.throw(500, e);
   }
 };
-
+/*
+    GET /api/consumer/info/usernum/:usernum
+*/
+export const searchusernum = async (ctx) => {
+  const { usernum } = ctx.params;
+  try {
+    const post = await Info.findOne({usernum : usernum}).exec();
+    if (!post) {
+      ctx.status = 404;
+      return;
+    }
+    ctx.body = post;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
 /*
     DELETE /api/consumer/info/:id
 */
