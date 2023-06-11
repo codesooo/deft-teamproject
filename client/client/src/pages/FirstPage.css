@@ -1,0 +1,26 @@
+.btn1 {
+    margin: 10%;
+    margin-left: 20%;
+    height: 300px;
+    border-radius: 20px;
+    background-color: #cfcfcf;
+    box-shadow: 8px 8px 12px #ebebeb, -8px -8px 12px #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .btn2 {
+    margin: 10%;
+    margin-right: 20%;
+    height: 300px;
+    border-radius: 20px;
+    background-color: #b1d4fc;
+    box-shadow: 8px 8px 12px #ebebeb, -8px -8px 12px #ffffff;
+    display: flex;
+    justify-content: center;    
+    align-items: center;
+  }
+
+  .text {
+    display: flex;
+  }
