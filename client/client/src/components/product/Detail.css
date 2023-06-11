@@ -1,0 +1,21 @@
+.body {
+    background-color: #ffffff;
+    padding: 2.5%;
+    border-radius: 3%;
+}
+.comments-comment {
+    background-color: #f1f6fe;
+    line-height: 25px;
+    height: 50px;
+    width: 455px;
+    padding-left: 1%;
+    border-radius: 3%;
+}
+.comments {
+    overflow-y: auto;
+    width: 480px;
+    height: 320px;
+}
+.comment-delete {
+    margin-top: 18px;
+}

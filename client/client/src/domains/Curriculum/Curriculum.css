@@ -1,0 +1,13 @@
+.curriDiv1 {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+.ant-modal-body {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    font-size: 10px;
+    line-height: 1.5715;
+    word-wrap: break-word;
+}

@@ -1,0 +1,12 @@
+.btn {
+    width: 54%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 5px;
+}
+
+.div1{
+    width: 75%;
+    display: flex;
+    justify-content: flex-start;
+}
