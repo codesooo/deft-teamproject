@@ -1,10 +1,10 @@
-# 헬스케어 이종 고객 데이터 관리 시스템
+# 👩‍💻 헬스케어 이종 고객 데이터 관리 시스템
 다양한 질환을 가진 고객들로부터 발생되는 데이터들을 체계적으로 수집 및 관리할 수 있는 웹 형태의 솔루션을 개발한다.
 
-## SW Architecture Diagram
+## 💡 SW Architecture Diagram
 <img src="https://github.com/codesooo/deft-teamproject/assets/88030238/278bd98e-afb6-4576-a19c-f292a7326898" width="50%">
 
-## IA (Information Architecture)
+## 💡 IA (Information Architecture)
 ### 1. 회원가입 및 로그인 페이지
 회원가입과 로그인 프로세스이다.
 
