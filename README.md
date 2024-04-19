@@ -13,16 +13,16 @@
 ### 2. 회원 IA
 회원 계정에 대한 정보구조도이다.
 
-<img src="https://github.com/codesooo/deft-teamproject/assets/88030238/cad53946-34dc-43bb-8901-d50a27642c15" width="45%">
+<img src="https://github.com/codesooo/deft-teamproject/assets/88030238/cad53946-34dc-43bb-8901-d50a27642c15" width="35%">
 
 ### 3. 코치 IA
 코치 계정에 대한 정보구조도이다.
 
-<img src="https://github.com/codesooo/deft-teamproject/assets/88030238/4aae1b03-9bd1-49fd-a7fe-41e4a9c2c721" width="70%">
+<img src="https://github.com/codesooo/deft-teamproject/assets/88030238/4aae1b03-9bd1-49fd-a7fe-41e4a9c2c721" width="50%">
 
 ### 4. 관리자 IA
 관리자 계정에 대한 정보구조도이다.
 
-<img src="https://github.com/codesooo/deft-teamproject/assets/88030238/51bc0b1b-c060-4d08-94f0-a6f1ab2980fe" width="70%">
+<img src="https://github.com/codesooo/deft-teamproject/assets/88030238/51bc0b1b-c060-4d08-94f0-a6f1ab2980fe" width="50%">
 
 
